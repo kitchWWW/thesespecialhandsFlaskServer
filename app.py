@@ -8,6 +8,9 @@ def current_milli_time():
 
 app = Flask(__name__)
 
+def run():
+    app.run()
+
 @app.route("/")
 def hello_world():
     return "<p>Hello, World!</p>"
@@ -18,3 +21,7 @@ def doUploadAudio():
         file = request.files['messageFile']
         file.save('./uploads/'+str(current_milli_time())+".wav")
     return "success"
+
+
+if __name__ == "__main__":
+    app.run()
