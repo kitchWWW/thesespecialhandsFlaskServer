@@ -9,31 +9,26 @@ from flask import send_file
 def current_milli_time():
     return round(time.time() * 1000)
 
+def getAllNames():
+    allFiles = os.listdir('./uploads')
+    names = filter(lambda x: '.mp3' in x, allFiles)
+    return sorted(names)
+
 def deleteIfNeeded():
     while doDeleteFiles():
         os.system("rm ./uploads/"+getOldestFile())
 
 def doDeleteFiles():
-    allFiles = os.listdir('./uploads')
-    names = list(filter(lambda x: '.wav' in x, allFiles))
+    names = getAllNames()
     if(len(names) > 10):
         return True
     return False
 
 def getOldestFile():
-    allFiles = os.listdir('./uploads')
-    names = filter(lambda x: '.wav' in x, allFiles)
-    snames = sorted(names)
-    print(snames)
-    return snames[0]
-
+    return getAllNames()[0]
 
 def getLatestFile():
-    allFiles = os.listdir('./uploads')
-    names = filter(lambda x: '.wav' in x, allFiles)
-    snames = sorted(names)
-    print(snames)
-    return snames[-1]
+    return getAllNames()[-1]
 
 
 app = Flask(__name__)
@@ -52,14 +47,14 @@ def hello_world():
 def doUploadAudio():
     if request.method == 'POST':
         file = request.files['messageFile']
-        file.save('./uploads/'+str(current_milli_time())+".wav")
+        file.save('./uploads/'+str(current_milli_time())+".mp3")
         deleteIfNeeded()
     return "success"
 
-@app.route('/theseSpecialHands/latest.wav', methods=['GET'])
+@app.route('/theseSpecialHands/latest.mp3', methods=['GET'])
 def doGetLatestAudio():
     try:
-        return send_file('./uploads/'+getLatestFile(), attachment_filename='latest.wav')
+        return send_file('./uploads/'+getLatestFile(), attachment_filename='latest.mp3')
     except Exception as e:
         return str(e)
 
