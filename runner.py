@@ -2,7 +2,7 @@ import requests
 
 def send_audio():
     #print('attempting to send audio')
-    url = 'http://127.0.0.1:5000/theseSpecialHands/audio'
+    url = 'http://127.0.0.1:5000/theseSpecialHands/upload'
     with open('test.wav', 'rb') as file:
         data = {}
         files = {'messageFile': file}
