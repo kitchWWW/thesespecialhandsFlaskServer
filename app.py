@@ -54,7 +54,7 @@ def doUploadAudio():
         deleteIfNeeded()
     return "success"
 
-@app.route('/theseSpecialHands/latest', methods=['GET'])
+@app.route('/theseSpecialHands/latest.wav', methods=['GET'])
 def doGetLatestAudio():
     try:
         return send_file('./uploads/'+getLatestFile(), attachment_filename='latest.wav')
